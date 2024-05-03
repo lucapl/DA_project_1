@@ -61,3 +61,9 @@ def rank_string(ranking,names,third_column=None,third_name="id"):
 
 def show_rank(ranking,names):
 	print(rank_string(ranking,names))
+
+def flip_rank(rank):
+    flipped = [None for id in rank]
+    for r,id in enumerate(rank):
+        flipped[id] = r
+    return flipped

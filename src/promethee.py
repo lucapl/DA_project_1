@@ -6,9 +6,9 @@ import pandas as pd
 
 from queue import Queue
 
-from utils import rank_string,show_rank
+from src.utils import rank_string,show_rank,flip_rank
 
-from typing import Tuple,List,any
+from typing import Tuple,List,Any
 
 def type_1(d):
 	return 1 if d > 0 else 0
@@ -23,8 +23,8 @@ def type_5(d,q:float,p:float):
 
 class Promethee:
 	def __init__(self,data:pd.DataFrame,criterion_type:Tuple[bool],criterion_weights:Tuple[float]=None,discrimination_thresholds:np.array=None):
-		self.data = data.drop(columns="name")
-		self.names = data["name"]
+		self.data = data
+		self.names = data.index
 		self.ranking = [i for i in range(len(self.names))]
 		self.is_crit_gain = criterion_type
 		self.criterion_weighs = criterion_weights
@@ -65,10 +65,7 @@ class Promethee:
 		return positive_flow,negative_flow
 	
 	def _flip_rank(self,rank):
-		flipped = [None for id in rank]
-		for r,id in enumerate(rank):
-			flipped[id] = r
-		return flipped
+		return flip_rank(rank)
 
 	def flipped_ranking(self):
 		return self._flip_rank(self.ranking)
