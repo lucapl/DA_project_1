@@ -1,11 +1,11 @@
 import pandas as pd
+import numpy as np
 
 from typing import List
 
 def find_dominated_alternatives(data:pd.DataFrame,isGain:List[bool],domination=lambda a,b:not a>=b):
 
     a = len(data)
-    nameless_data = data.drop(columns="name")
     
     dominates = [[] for _ in range(a)]
 
@@ -15,7 +15,7 @@ def find_dominated_alternatives(data:pd.DataFrame,isGain:List[bool],domination=l
                 break
 
             i_dominates_j = True
-            for g_j,g in enumerate(nameless_data):
+            for g_j,g in enumerate(data):
                 g_vals = np.array(data[g])
 
                 if not isGain[g_j]:
